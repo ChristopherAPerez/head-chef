@@ -1,2 +1,0 @@
-class MenuRecipesController < ApplicationController
-end
