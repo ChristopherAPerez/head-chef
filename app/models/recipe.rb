@@ -1,6 +1,8 @@
 class Recipe < ApplicationRecord
-    has_many :menurecipes
-    has_many :menus, through: :menurecipes
+    belongs_to :user
+
+    has_many :menu_to_recipes
+    has_many :menus, through: :menu_to_recipes
 
     has_many :ingredients
     has_many :reviews
