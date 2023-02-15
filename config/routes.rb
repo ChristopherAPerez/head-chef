@@ -4,9 +4,13 @@ Rails.application.routes.draw do
   # Leave this here to help deploy your app later!
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 
+  post "/login", to: "sessions#create"
+  delete "/logout", to: "sessions#destroy"
+
   resources :inventories
 
-  resources :users
+  resources :users, except: [:show]
+  get "/me", to: "users#show"
 
   resources :menus
 

@@ -1,5 +1,20 @@
 .App {
   text-align: center;
+  background-image: url("../images/crumbled_paper.jpg");
+  width: 1000px;
+  min-height: 750px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 80px;
+  margin-bottom: 80px;
+  font-family: "Papyrus";
+  padding-bottom: 50px;
+  box-shadow: 0 30px 40px rgb(0, 0, 0);
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: black;
 }
 
 .App-logo {
@@ -35,4 +50,11 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* CSS */
+
+.logo{
+  width: 400px;
+  height: 200px;
 }
