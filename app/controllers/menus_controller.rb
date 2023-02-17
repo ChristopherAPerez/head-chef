@@ -7,7 +7,7 @@ class MenusController < ApplicationController
 
     def create
         menu = Menu.create(menu_params)
-        render json: menu
+        render json: menu, include: ['recipes']
     end
 
     def show
@@ -25,10 +25,19 @@ class MenusController < ApplicationController
         end
     end
 
+    def published
+        menu = Menu.find_by(publish: false)
+        if menu
+            render json: menu, include: ['recipes']
+        else
+            render json: { error: "error" }, status: :unprocessable_entity
+        end
+    end
+
     private
 
     def menu_params
-        params.permit(:menu_date, :user_id)
+        params.permit(:menu_date, :user_id, :publish)
     end
 
 end

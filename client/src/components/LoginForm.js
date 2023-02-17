@@ -1,7 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom"
+// import { useLoginUser } from './UserContext'
+import { UserContext } from './App';
 
-function LoginForm({ setUser }) {
+function LoginForm() {
+
+  // const loginUser = useLoginUser()
+  const { setUser, setLoading } = useContext(UserContext)
+
   const navigate = useNavigate()
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -16,7 +22,15 @@ function LoginForm({ setUser }) {
       body: JSON.stringify({ username, password }),
     }).then((r) => {
       if (r.ok) {
-        r.json().then((user) => setUser(user))
+        r.json().then((user) => {
+          setUser(user)
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+          setTimeout(() => {
+            setLoading(false)
+          }, 3000);
+        })
       } else {
         r.json().then((err) => {
             alert(err.errors)

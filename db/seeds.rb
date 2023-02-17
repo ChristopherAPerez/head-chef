@@ -39,7 +39,9 @@ four_stars = Review.create(rating: 4, comment: "Very tasty! I would add some cho
 
 puts "🏕 Seeding menus..."
 
-menu = Menu.create(menu_date: "2/15/2023", user_id: gordon_ramsey.id)
+menu = Menu.create(menu_date: "2/15/2023", user_id: gordon_ramsey.id, publish: true)
+
+menu = Menu.create(menu_date: "2/16/2023", user_id: gordon_ramsey.id, publish: false)
 
 puts "🏕 Seeding menu_to_recipes..."
 

@@ -1,14 +1,39 @@
-import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom"
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom"
+import { UserContext } from './App';
 
-function SignUpForm({ setUser }) {
-  // const navigate = useNavigate()
+function SignUpForm(  ) {
+
+  const { setUser } = useContext(UserContext)
+
+  const navigate = useNavigate()
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
   function handleSubmit(e) {
-
+    fetch("/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username,
+        password,
+        password_confirmation: passwordConfirmation,
+        bio: "",
+        profile_pic: ""
+      }),
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((user) => setUser(user))
+      } else {
+        r.json().then((err) => {
+            alert(err.errors)
+        })
+    }
+    });
+    navigate("/")
   }
 
   return (

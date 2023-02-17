@@ -1,33 +1,33 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
+import { UserContext } from './App';
 
-import logo from "../images/HeadCHEF.PNG"
+import logo from '../images/HeadCHEFv 2.PNG'
 
-function Header( { user, setUser } ) {
+function Header() {
 
-    function handleLogoutClick() {
-        fetch("/logout", { method: "DELETE" }).then((r) => {
-          if (r.ok) {
-            setUser(null);
-          }
-        });
+    const navigate = useNavigate()
+
+    const { user } = useContext(UserContext)
+
+    function handleHome() {
+        navigate("/")
       }
 
     return (
         <>
-            <img className='logo' src={logo} alt={logo} />
+            <img className='logo' src={logo} alt={logo} onClick={handleHome}/>
             {user ? (
                 <>
-                    <br></br>
-                    <button className="button" onClick={handleLogoutClick} >Logout</button>
                 </>
             ) : (
                 <>
                     <br></br>
                     <br></br>
-                    <Link className="link" to="/signup">Signup</Link>
-                    <Link className="link" to="/login">Login</Link>
-                </>
+                    <Link className="link" to="/signup" >Signup</Link>
+                    <Link className="link" to="/login" >Login</Link>
+                </> 
             )}
         </>
     )

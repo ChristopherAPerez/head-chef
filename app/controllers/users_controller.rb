@@ -7,12 +7,23 @@ class UsersController < ApplicationController
 
     def create
         user = User.create(user_params)
-        render json: users
+        if user.valid?
+            session[:user_id] = user.id
+            render json: user, status: :created
+        else
+            render json: { errors: ["Unprocessable Entity"] }, status: :unprocessable_entity
+        end
     end
 
     def show
         user = User.find_by(id: session[:user_id])
-        render json: user, include: ['menus', 'recipes', 'reviews']
+        if user
+            render json: user, include: ['inventories', 'menus', 'recipes']
+        else
+            render json: { errors: ["Not authorized"] }, status: :unauthorized
+        end
+        # user = User.find_by(id: session[:user_id])
+        # render json: user, include: [:inventories, :menus, :recipes, :reviews]
     end
 
     def update

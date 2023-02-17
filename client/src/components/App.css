@@ -1,6 +1,5 @@
 .App {
   text-align: center;
-  background-image: url("../images/crumbled_paper.jpg");
   width: 1000px;
   min-height: 750px;
   margin-left: auto;
@@ -14,7 +13,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-color: black;
+  background-color: white;
 }
 
 .App-logo {
@@ -54,7 +53,44 @@
 
 /* CSS */
 
+.charts{
+  width: 400px;
+  height: 200px;
+}
+
 .logo{
   width: 400px;
   height: 200px;
+}
+
+.navlink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;
+  background-color: rgb(155, 218, 239);
+  color: #333;
+  text-decoration: none;
+  font-weight: bold;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100px;
+  height: 100px;
+}
+
+.navlink:hover {
+  background-color: #ff00f2;
+}
+
+.rectangle {
+  width: 600px;
+  height: auto;
+  border: 1px solid black;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.table {
+  margin-left: auto;
+  margin-right: auto;
 }

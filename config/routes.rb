@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get "/me", to: "users#show"
 
   resources :menus
+  get "/published", to: "menus#published"
 
   resources :recipes
 

@@ -1,9 +1,13 @@
-import React from "react";
+import React, {useContext} from "react";
+import { UserContext } from './App';
 
 function LoggedIn() {
+
+    const { user, setUser } = useContext(UserContext)
+
     return (
         <>
-            <p>Welcome</p>
+            <p>{user.username}</p>
         </>
     )
 }
