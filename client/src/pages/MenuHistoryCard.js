@@ -6,7 +6,7 @@ function MenuHistoryCard( { menu } ) {
     const [recipes, setRecipes] = useState(menu.recipes)
 
     function handleClick(){
-        console.log(setRecipes)
+        console.log(menu)
     }
 
     return (
@@ -15,7 +15,7 @@ function MenuHistoryCard( { menu } ) {
                 {menu.menu_date}
             </p>
             {recipes.map((recipe) => {
-                return <MealCard key={recipe.key} recipe={recipe}/>
+                return <MealCard key={recipe.id} recipe={recipe}/>
             })}
         </div>
     )

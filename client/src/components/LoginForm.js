@@ -26,7 +26,7 @@ function LoginForm() {
           setUser(user)
           setTimeout(() => {
             window.location.reload();
-          }, 1000);
+          }, 1500);
           setTimeout(() => {
             setLoading(false)
           }, 3000);

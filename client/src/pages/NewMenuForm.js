@@ -1,14 +1,16 @@
 import React, { useContext } from "react";
-import { MenuContext } from "./Menus";
+
 import MenuRecipes from './MenuRecipes';
 
 import { UserContext } from '../components/App';
+import { MenuContext } from '../components/App';
+import { PublishContext } from '../components/App';
 
 function NewMenuForm() {
 
     const { user } = useContext(UserContext)
-
-    const { unpublish, setUnPublish, menus, setMenus } = useContext(MenuContext)
+    const { unpublish, setUnPublish, unpublishRecipes, setUnPublishRecipes } = useContext(PublishContext)
+    const { menus, setMenus } = useContext(MenuContext)
 
     function handleSubmit(e) {
 
@@ -32,7 +34,6 @@ function NewMenuForm() {
                 if (r.ok) {
                     r.json().then((menu) => {
                         setUnPublish(menu)
-                        setMenus([...menus, menu])
                     });
                 } else {
                     r.json().then((err) => {
@@ -60,9 +61,11 @@ function NewMenuForm() {
         })
             .then((r) => {
                 if (r.ok) {
-                    r.json().then((update) => {
+                    r.json().then((menu) => {
+                        setMenus([...menus, menu])
                         setUnPublish(null)
-                        console.log(update)
+                        setUnPublishRecipes([])
+                        console.log(menu)
                     })
                 } else {
                     r.json().then((err) => {
@@ -72,14 +75,18 @@ function NewMenuForm() {
             })
     }
 
+    function test(){
+        console.log(unpublish)
+    }
+
 
     return (
         <>
             {unpublish ?
                 <div>
-                    <p>{unpublish.menu_date}</p>
+                    <p onClick={test}>{unpublish.menu_date}</p>
                     {unpublish.recipes.map((recipe, index) => {
-                        return <MenuRecipes key={recipe.id} recipe={recipe} index={index} />
+                        return <MenuRecipes key={index} recipe={recipe} index={index} />
                     })}
                     <p onClick={unpublished} >published</p>
                 </div>

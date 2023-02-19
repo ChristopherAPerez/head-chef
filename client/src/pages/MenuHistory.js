@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { MenuContext } from "./Menus";
+import { MenuContext } from '../components/App';
 import MenuHistoryCard from './MenuHistoryCard'
 
 function MenuHistory() {
@@ -13,9 +13,11 @@ function MenuHistory() {
     return (
         <>
         <p onClick={handleClick}>click</p>
+
             {menus.map((menu) => {
-                return <MenuHistoryCard key={menu.created_at} menu={menu}/>
+                return <MenuHistoryCard key={menu.id} menu={menu}/>
             })}
+
         </>
     )
 }

@@ -30,7 +30,7 @@ class UsersController < ApplicationController
         user = User.find_by(id: params[:id])
         user.update(user_params)
         if user.valid?
-            render json: user, status: :accepted
+            render json: user, include: ['inventories', 'menus', 'recipes'], status: :accepted
         else
             render json: { error: "error" }, status: :unprocessable_entity
         end

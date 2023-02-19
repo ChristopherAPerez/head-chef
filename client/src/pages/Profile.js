@@ -26,7 +26,7 @@ function Profile() {
       )}
 
       {isEditing ? (<>
-        <EditProfile editPic={editPic} setEditPic={setEditPic} />
+        <EditProfile isEditing={isEditing} setIsEditing={setIsEditing} />
       </>
       ) : (
         <>

@@ -20,14 +20,19 @@ import stir from '../images/Pot RICE.GIF'
 import './App.css';
 
 export const UserContext = createContext();
+export const MenuContext = createContext();
+export const PublishContext = createContext();
 
 function App() {
 
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null)
-  const [menus, setMenus] = useState([])
+  const [menus, setMenus] = useState(null)
   const [recipes, setRecipes] = useState([])
   const [inventory, setInventory] = useState([])
+
+  const [unpublish, setUnPublish] = useState(null)
+  const [unpublishRecipes, setUnPublishRecipes] = useState([])
 
   useEffect(() => {
 
@@ -35,10 +40,30 @@ function App() {
       if (r.ok) {
         r.json().then((user) => {
           setUser(user)
-          setMenus(user.menus)
           setRecipes(user.recipes)
           setInventory(user.inventories)
           setLoading(false)
+        })
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    fetch("/index_published").then((r) => {
+      if (r.ok) {
+        r.json().then((menu) => {
+          setMenus(menu)
+        })
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    fetch("/published").then((r) => {
+      if (r.ok) {
+        r.json().then((menu) => {
+          setUnPublish(menu)
+          setUnPublishRecipes(menu.recipes)
         })
       }
     });
@@ -73,20 +98,24 @@ function App() {
               </UserContext.Provider>
               <br></br>
               <UserContext.Provider value={{ user, setUser, setLoading }}>
-                <Routes>
-                  <Route path="/menus" element={<Menus />}>
-                  </Route>
-                  <Route path="/inventory" element={<Inventory />}>
-                  </Route>
-                  <Route path="/recipes" element={<Recipes />}>
-                  </Route>
-                  <Route path="/stats" element={<Stats />}>
-                  </Route>
-                  <Route path="/profile" element={<Profile />}>
-                  </Route>
-                  <Route path="/" element={<NavRectangle />}>
-                  </Route>
-                </Routes>
+                <MenuContext.Provider value={{ menus, setMenus }} >
+                  <PublishContext.Provider value={{ unpublish, setUnPublish, unpublishRecipes, setUnPublishRecipes }} >
+                    <Routes>
+                      <Route path="/menus" element={<Menus />}>
+                      </Route>
+                      <Route path="/inventory" element={<Inventory />}>
+                      </Route>
+                      <Route path="/recipes" element={<Recipes />}>
+                      </Route>
+                      <Route path="/stats" element={<Stats />}>
+                      </Route>
+                      <Route path="/profile" element={<Profile />}>
+                      </Route>
+                      <Route path="/" element={<NavRectangle />}>
+                      </Route>
+                    </Routes>
+                  </PublishContext.Provider>
+                </MenuContext.Provider>
               </UserContext.Provider>
             </>
           )}

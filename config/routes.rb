@@ -13,7 +13,9 @@ Rails.application.routes.draw do
   get "/me", to: "users#show"
 
   resources :menus
+  get "/index_published", to: "menus#index_published"
   get "/published", to: "menus#published"
+  post "/addRecipe", to: "menus#add_to_published"
 
   resources :recipes
 

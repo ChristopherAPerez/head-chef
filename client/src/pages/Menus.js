@@ -1,48 +1,48 @@
 import React, { useContext, useState, useEffect, createContext } from "react";
 import { UserContext } from '../components/App';
+import { MenuContext } from '../components/App';
 
 import MenuHistory from './MenuHistory'
 // import Menu from './Menu'
 import NewMenuForm from './NewMenuForm'
 
-export const MenuContext = createContext();
+export const PublishContext = createContext();
 
 function Menus() {
 
-    const { user } = useContext(UserContext)
+    const { menus, setMenus } = useContext(MenuContext)
 
-    const [menus, setMenus] = useState([])
+    // const [menus, setMenus] = useState(null)
     // const [allMenus, setAllMenus] = useState([])
-    const [unpublish, setUnPublish] = useState(null)
+    // const [unpublish, setUnPublish] = useState(null)
     const [page, setPage] = useState("Menu")
 
-    useEffect(() => {
+    // useEffect(() => {
+    //     fetch("/menus").then((r) => {
+    //         if (r.ok) {
+    //             r.json().then((menu) => {
+    //                 setMenus(menu)
+    //             })
+    //         }
+    //     });
+    // }, []);
 
-        fetch("/menus").then((r) => {
-            if (r.ok) {
-                r.json().then((menu) => {
-                    setMenus(menu)
-                })
-            }
-        });
-    }, []);
-
-    useEffect(() => {
-        fetch("/published").then((r) => {
-            if (r.ok) {
-                r.json().then((menu) => {
-                    setUnPublish(menu)
-                })
-            }
-        });
-    }, []);
+    // useEffect(() => {
+    //     fetch("/published").then((r) => {
+    //         if (r.ok) {
+    //             r.json().then((menu) => {
+    //                 setUnPublish(menu)
+    //             })
+    //         }
+    //     });
+    // }, []);
 
     // function handleClick() {
     //     console.log(unpublish)
     // }
 
     function handleClick() {
-        console.log(menus)
+        // console.log(menus)
         // console.log(allMenus)
     }
 
@@ -64,13 +64,10 @@ function Menus() {
 
             {
                 page === "Menu History" ?
-                    <MenuContext.Provider value={{ menus, setMenus }} >
-                        <MenuHistory />
-                    </MenuContext.Provider>
+
+                    <MenuHistory />
                     :
-                    <MenuContext.Provider value={{ unpublish, setUnPublish, menus, setMenus }} >
-                        <NewMenuForm />
-                    </MenuContext.Provider>
+                    <NewMenuForm />
             }
 
             <br></br>
