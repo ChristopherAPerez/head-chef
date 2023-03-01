@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom"
 import { UserContext } from './App';
 
-import logo from '../images/HeadCHEFv 2.PNG'
+import logo from '../images/HeadCHEF final.PNG'
 
 function Header() {
 
@@ -24,9 +24,8 @@ function Header() {
             ) : (
                 <>
                     <br></br>
-                    <br></br>
-                    <Link className="link" to="/signup" >Signup</Link>
-                    <Link className="link" to="/login" >Login</Link>
+                    <Link className="button" to="/signup" >Signup</Link>
+                    <Link className="button" to="/login" >Login</Link>
                 </> 
             )}
         </>

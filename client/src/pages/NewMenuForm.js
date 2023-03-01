@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 
 import MenuRecipes from './MenuRecipes';
+import DeleteButton from './DeleteButton'
 
 import { UserContext } from '../components/App';
 import { MenuContext } from '../components/App';
@@ -9,13 +10,13 @@ import { PublishContext } from '../components/App';
 function NewMenuForm() {
 
     const { user } = useContext(UserContext)
-    const { unpublish, setUnPublish, unpublishRecipes, setUnPublishRecipes } = useContext(PublishContext)
+    const { unpublish, setUnPublish, unpublishRecipes, setUnPublishRecipes, unpublishMenuToRecipes, setUnpublishMenuToRecipes } = useContext(PublishContext)
     const { menus, setMenus } = useContext(MenuContext)
 
-    function handleSubmit(e) {
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [message, setMessage] = useState('');
 
-        e.preventDefault();
-
+    function handleCreate() {
         const date = new Date();
         const dateString = date.toDateString();
 
@@ -48,8 +49,19 @@ function NewMenuForm() {
         setUnPublish(unpublish)
     }
 
-    function unpublished() {
+    function sendSms() {
+        fetch('/send_sms', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(data => console.log(data))
+            .catch(err => console.log(err));
+    }
 
+    function publishMenu() {
         fetch(`menus/${unpublish.id}`, {
             method: "PATCH",
             headers: {
@@ -75,30 +87,85 @@ function NewMenuForm() {
             })
     }
 
-    function test(){
-        console.log(unpublish)
+    function DeleteUnpublishRecipes(id) {
+        const updatedUnpublishedRecipe = unpublishRecipes.filter((recipe) => recipe.id !== id);
+        setUnPublishRecipes(updatedUnpublishedRecipe);
     }
+
+    function DeleteMenuToRecipe(id) {
+        const updatedMenuToRecipe = unpublishMenuToRecipes.filter((menu_to_recipe) => menu_to_recipe.id !== id);
+        setUnpublishMenuToRecipes(updatedMenuToRecipe);
+    }
+
+    ///////////////
+
+    function unpublished() {
+
+        // sendSms()
+
+        setTimeout(() => {
+            publishMenu()
+        }, 4000);
+
+    }
+
+    function clearRecipe() {
+        fetch(`/clear_menu`, {
+            method: "DELETE",
+        }).then((r) => {
+            if (r.ok) {
+                setUnPublishRecipes([])
+                setUnpublishMenuToRecipes([])
+            } else {
+                r.json().then((err) => {
+                    alert(err.error)
+                })
+            }
+        });
+    }
+
+    ///////////////
 
 
     return (
         <>
-            {unpublish ?
-                <div>
-                    <p onClick={test}>{unpublish.menu_date}</p>
-                    {unpublish.recipes.map((recipe, index) => {
-                        return <MenuRecipes key={index} recipe={recipe} index={index} />
-                    })}
-                    <p onClick={unpublished} >published</p>
-                </div>
-                :
-                <>
-                    <form onSubmit={handleSubmit}>
-                        <input type="submit" value="Create New Form" />
-                    </form>
-                    <p onClick={published} >unpublished</p>
-                </>
-            }
+            <br></br>
+            <br></br>
+            <div className="egg">
+                {unpublish ?
+                    <div>
+                        <br></br>
+                        <p><b>{unpublish.menu_date}</b></p>
+                        {unpublishRecipes.map((recipe, index) => {
+                            return <MenuRecipes key={index} recipe={recipe} index={index} />
+                        })}
+                        <br></br>
+                    </div>
+                    :
+                    <>
+                    </>
+                }
 
+                <br></br>
+            </div>
+            <br></br>
+            {unpublish ? (
+                <>
+                    <br></br>
+                    <button className="button" onClick={clearRecipe}>Clear Menu</button><br></br>
+                    <label><b>Phone Number: </b></label>
+            <input
+                type="text"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+            />
+            <button className="button" onClick={unpublished}>Publish</button>
+                </>
+            ) : (
+                <>
+                    <button className="button" onClick={handleCreate}>Create New Form</button>
+                </>
+            )}
         </>
     )
 }

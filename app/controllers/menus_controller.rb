@@ -6,7 +6,8 @@ class MenusController < ApplicationController
     end
 
     def index_published
-        menus = Menu.where(publish: true)
+        user = User.find_by(id: session[:user_id])
+        menus = Menu.where(user_id: user.id).where(publish: true)
         render json: menus, include: ['recipes']
     end
 
@@ -21,19 +22,33 @@ class MenusController < ApplicationController
     end
 
     def update
-        menu = Menu.find_by(id: params[:id])
-        menu.update(menu_params)
-        if menu.valid?
+        menu = Menu.find_by(publish: false)
+        if menu.menu_to_recipes.length == 3
+            menu.update(menu_params)
             render json: menu, include: ['recipes'], status: :accepted
+        else
+            render json: { error: "Incomplete Menu!" }, status: :unprocessable_entity
+        end
+    end
+
+    def published
+        user = User.find_by(id: session[:user_id])
+        menus = Menu.where(user_id: user.id)
+        menu = menus.find_by(publish: false)
+        if menu
+            render json: menu, include: ['recipes', 'menu_to_recipes']
         else
             render json: { error: "error" }, status: :unprocessable_entity
         end
     end
 
-    def published
-        menu = Menu.find_by(publish: false)
-        if menu
-            render json: menu, include: ['recipes']
+    def published_recipes
+        user = User.find_by(id: session[:user_id])
+        menus = Menu.where(user_id: user.id)
+        menu = menus.find_by(publish: false)
+        recipes = menu.recipes
+        if recipes
+            render json: recipes, include: ['reviews', 'user']
         else
             render json: { error: "error" }, status: :unprocessable_entity
         end
@@ -48,6 +63,69 @@ class MenusController < ApplicationController
         else
             render json: { error: "error" }, status: :unprocessable_entity
         end
+    end
+
+    def retrieve_cal_stats
+        user = User.find_by(id: session[:user_id])
+
+        menus = Menu.where(user_id: user.id).where(publish: true).limit(5).order(created_at: :desc)
+
+        array = menus.map do |menu|
+                menu.recipes
+        end
+
+        total_cal = array.map do |recipe|
+            cal = recipe.reduce(0) { |sum, element| sum + element.calories }
+        end
+        data = menus.map.with_index do |menu, index|
+            {
+                    "date" => menu.menu_date,
+                    "total" => total_cal[index]
+            }
+        end
+
+
+        render json: data
+    end
+
+    def retrieve_prep_stats
+        user = User.find_by(id: session[:user_id])
+
+        menus = Menu.where(user_id: user.id).where(publish: true).limit(5).order(created_at: :desc)
+
+        array = menus.map do |menu|
+                menu.recipes
+        end
+
+        total_prep = array.map do |recipe|
+            cal = recipe.reduce(0) { |sum, element| sum + element.prep_time }
+        end
+
+        data = menus.map.with_index do |menu, index|
+            {
+                    "date" => menu.menu_date,
+                    "total" => total_prep[index]
+            }
+        end
+
+
+        render json: data
+    end
+
+    def clear_menu
+        menu = Menu.find_by(publish: false)
+        menu_to_recipes = menu.menu_to_recipes
+        recipes = menu.recipes
+
+        menu_to_recipes.each do |menu_to_recipe|
+            menu_to_recipe.destroy
+        end
+
+        recipes.each do |recipe|
+            recipe.destroy
+        end
+
+        render json: menu, include: ['menu_to_recipes', 'recipes']
     end
 
     private

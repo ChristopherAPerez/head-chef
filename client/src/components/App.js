@@ -2,22 +2,27 @@ import React, { useState, useEffect, createContext } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Header from "./Header"
+import CurrentMenu from "./CurrentMenu"
 import NavRectangle from "./NavRectangle"
 
 // import LoggedIn from "./LoggedIn"
 import Menus from "../pages/Menus"
-import Inventory from "../pages/Inventory"
+// import Inventory from "../pages/Inventory"
 import Recipes from "../pages/Recipes"
+// import RecipePage from "../pages/RecipePage"
 import Profile from "../pages/Profile"
 import Stats from "../pages/Stats"
+import FriendsList from "../pages/FriendsList"
 
 import LoggedOut from "./LoggedOut"
 import LoginForm from "./LoginForm"
 import SignUpForm from "./SignUpForm";
 
-import stir from '../images/Pot RICE.GIF'
+import stir from '../images/Pot RICE blue.GIF'
 
 import './App.css';
+
+// import ReactModal from 'react-modal';
 
 export const UserContext = createContext();
 export const MenuContext = createContext();
@@ -29,10 +34,18 @@ function App() {
   const [user, setUser] = useState(null)
   const [menus, setMenus] = useState(null)
   const [recipes, setRecipes] = useState([])
-  const [inventory, setInventory] = useState([])
+  // const [recipePage, setRecipePage] = useState({})
+  const [friends, setFriends] = useState([])
 
   const [unpublish, setUnPublish] = useState(null)
   const [unpublishRecipes, setUnPublishRecipes] = useState([])
+  const [unpublishMenuToRecipes, setUnpublishMenuToRecipes] = useState([])
+
+  const [stats, setStats] = useState([]);
+  
+
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
 
@@ -41,7 +54,7 @@ function App() {
         r.json().then((user) => {
           setUser(user)
           setRecipes(user.recipes)
-          setInventory(user.inventories)
+          setFriends(user.friends)
           setLoading(false)
         })
       }
@@ -63,22 +76,36 @@ function App() {
       if (r.ok) {
         r.json().then((menu) => {
           setUnPublish(menu)
-          setUnPublishRecipes(menu.recipes)
+          setUnpublishMenuToRecipes(menu.menu_to_recipes)
         })
       }
     });
   }, []);
 
+  useEffect(() => {
+    fetch("/published_recipes").then((r) => {
+      if (r.ok) {
+        r.json().then((recipes) => {
+          setUnPublishRecipes(recipes)
+        })
+      }
+    });
+  }, []);
+
+
+
   function handleClick() {
     console.log(user)
     console.log(menus)
     console.log(recipes)
-    console.log(inventory)
+    console.log(stats)
+
   }
+
+
 
   return (
     <div className='App'>
-
       {user ? (
         <>
           {loading ? (
@@ -93,17 +120,19 @@ function App() {
             </>
           ) : (
             <>
-              <UserContext.Provider value={{ user, setUser }}>
-                <Header />
+              <UserContext.Provider value={{ user, setUser, friends, setFriends }}>
+                <PublishContext.Provider value={{ unpublishRecipes }}>
+                  <Header />
+                </PublishContext.Provider>
               </UserContext.Provider>
               <br></br>
-              <UserContext.Provider value={{ user, setUser, setLoading }}>
+              <UserContext.Provider value={{ user, setUser, setLoading, stats, setStats, friends, setFriends }}>
                 <MenuContext.Provider value={{ menus, setMenus }} >
-                  <PublishContext.Provider value={{ unpublish, setUnPublish, unpublishRecipes, setUnPublishRecipes }} >
+                  <PublishContext.Provider value={{ unpublish, setUnPublish, unpublishRecipes, setUnPublishRecipes, unpublishMenuToRecipes, setUnpublishMenuToRecipes }} >
                     <Routes>
                       <Route path="/menus" element={<Menus />}>
                       </Route>
-                      <Route path="/inventory" element={<Inventory />}>
+                      <Route path="/friends" element={<FriendsList />}>
                       </Route>
                       <Route path="/recipes" element={<Recipes />}>
                       </Route>
@@ -133,8 +162,6 @@ function App() {
           </Routes>
         </UserContext.Provider>
       )}
-
-      <button onClick={handleClick}>App</button>
 
     </div>
   );

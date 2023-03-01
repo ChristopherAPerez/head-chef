@@ -5,10 +5,11 @@ import { MenuContext } from '../components/App';
 import MenuHistory from './MenuHistory'
 // import Menu from './Menu'
 import NewMenuForm from './NewMenuForm'
-
-export const PublishContext = createContext();
+import { useNavigate } from "react-router-dom"
 
 function Menus() {
+
+    const navigate = useNavigate()
 
     const { menus, setMenus } = useContext(MenuContext)
 
@@ -54,12 +55,16 @@ function Menus() {
         setPage("Menu History")
     }
 
+    function handleMainMenu(){
+        navigate("/")
+    }
+
     return (
-        <>
-            <button onClick={handleClick}>Menu</button>
+        <div className="menu">
+            <button className="button" onClick={handleMainMenu}>Main Menu</button>
             <br></br>
-            <button onClick={handleMyRecipesClick}>Menu History</button>
-            <button onClick={handleNewRecipeClick}>New Menu</button>
+            <button className="button" onClick={handleMyRecipesClick}>Menu History</button>
+            <button className="button" onClick={handleNewRecipeClick}>New Menu</button>
             <br></br>
 
             {
@@ -71,7 +76,7 @@ function Menus() {
             }
 
             <br></br>
-        </>
+        </div>
     )
 }
 

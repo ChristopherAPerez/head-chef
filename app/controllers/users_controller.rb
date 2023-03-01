@@ -18,7 +18,7 @@ class UsersController < ApplicationController
     def show
         user = User.find_by(id: session[:user_id])
         if user
-            render json: user, include: ['inventories', 'menus', 'recipes']
+            render json: user, include: ['friends', 'menus', 'recipes']
         else
             render json: { errors: ["Not authorized"] }, status: :unauthorized
         end
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
         user = User.find_by(id: params[:id])
         user.update(user_params)
         if user.valid?
-            render json: user, include: ['inventories', 'menus', 'recipes'], status: :accepted
+            render json: user, include: ['friends', 'menus', 'recipes'], status: :accepted
         else
             render json: { error: "error" }, status: :unprocessable_entity
         end

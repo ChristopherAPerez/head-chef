@@ -1,20 +1,50 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { UserContext } from '../components/App';
 import { RecipeContext } from './Recipes';
+import { useNavigate } from "react-router-dom"
+import App from "../components/App";
 
 function NewRecipeForm() {
 
+    const navigate = useNavigate()
+
     const { user } = useContext(UserContext)
-    const { allRecipes, setAllRecipes, recipes, setRecipes } = useContext(RecipeContext)
+    const { setPage, allRecipes, setAllRecipes, recipes, setRecipes } = useContext(RecipeContext)
 
     const [name, setName] = useState("")
     const [meal, setMeal] = useState("Breakfast")
     const [steps, setSteps] = useState([])
     const [step, setStep] = useState("")
+    const [ingredients, setIngredients] = useState([])
+    const [ingredient, setIngredient] = useState("")
     const [description, setDescription] = useState("")
     const [calories, setCalories] = useState(0)
     const [prep, setPrep] = useState(0)
     const [pic, setPic] = useState("")
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
+
+    function addStep(e) {
+
+        e.preventDefault();
+
+        setSteps([...steps, step])
+
+        setStep("")
+
+    }
+
+    function addIngredient(e) {
+
+        e.preventDefault();
+
+        setIngredients([...ingredients, ingredient])
+
+        setIngredient("")
+
+    }
 
     function handleSubmit(e) {
 
@@ -29,6 +59,7 @@ function NewRecipeForm() {
                 recipe_name: name,
                 meal: meal,
                 steps: steps,
+                ingredients: ingredients,
                 description: description,
                 calories: calories,
                 prep_time: prep,
@@ -42,6 +73,19 @@ function NewRecipeForm() {
                     r.json().then((recipe) => {
                         setRecipes([...recipes, recipe])
                         setAllRecipes([...allRecipes, recipe])
+
+                        setName("")
+                        setMeal("Breakfast")
+                        setSteps([])
+                        setStep("")
+                        setIngredients([])
+                        setIngredient("")
+                        setDescription("")
+                        setCalories(0)
+                        setPrep(0)
+                        setPic("")
+                        setPage("Recipes")
+                        window.location.reload();
                     });
                 } else {
                     r.json().then((err) => {
@@ -49,91 +93,139 @@ function NewRecipeForm() {
                     })
                 }
             })
-
+            window.scrollTo(0, 0);
     }
 
-    function handleClick() {
-        console.log(allRecipes)
-        console.log(setAllRecipes)
-        console.log(recipes)
-        console.log(setRecipes)
-        console.log(steps)
-    }
 
-    function addStep(e) {
 
-        e.preventDefault();
-
-        setSteps([...steps, step])
-
-        setStep("")
-
-    }
 
     return (
         <>
-
-            <form onSubmit={handleSubmit}>
-                <label>Name:</label><br></br>
-                <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-
-                <br></br>
-
-                <label>Meal:</label><br></br>
-                <select onChange={(e) => setMeal(e.target.value)} >
-                    <option value="Breakfast">Breakfast</option>
-                    <option value="Lunch">Lunch</option>
-                    <option value="Dinner">Dinner</option>
-                </select>
-
-                <br></br>
-
-                <br></br>
-
-                <label>Description:</label><br></br>
-                <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows="4" cols="45"></textarea>
-
-                <br></br>
-
-                <label>Calories:</label><br></br>
-                <input type="number" value={calories} onChange={(e) => setCalories(e.target.value)} />
-
-                <br></br>
-
-                <label>Prep Time:</label><br></br>
-                <input type="number" value={prep} onChange={(e) => setPrep(e.target.value)} />
-
-                <br></br>
-
-                <label>Picture:</label><br></br>
-                <textarea value={pic} onChange={(e) => setPic(e.target.value)} rows="4" cols="45"></textarea>
-
-                <br></br>
-
-                <input className="button" type="submit" />
-
-            </form>
-
             <br></br>
-            <br></br>
-
-            <form onSubmit={addStep}>
-
-                {steps.map((step, index) => {
-                    return <p key={index +1}>{index + 1}: {step}</p>
-                })}
-
-                <label>Add Steps:</label><br></br>
-
-                <input type="text" value={step} onChange={(e) => setStep(e.target.value)} />
-
-                <input className="button" type="submit" />
-
-            </form>
-
-            <br></br>
-
-            <button onClick={handleClick}>NewRecipeForm</button>
+            <div className="newRecipeForm">
+                <h1><u>Create New Recipe!</u></h1>
+                <form className="addRecipeForm" onSubmit={handleSubmit}>
+                    <label>
+                        <b>
+                            Name:
+                        </b>
+                    </label>
+                    <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                    <br></br>
+                    <label>
+                        <b>
+                            Meal:
+                        </b>
+                    </label>
+                    <select
+                        value={meal}
+                        onChange={(e) => setMeal(e.target.value)}
+                    >
+                        <option
+                            value="Breakfast"
+                        >
+                            Breakfast
+                        </option>
+                        <option
+                            value="Lunch"
+                        >
+                            Lunch
+                        </option>
+                        <option
+                            value="Dinner"
+                        >
+                            Dinner
+                        </option>
+                    </select>
+                    <br></br>
+                    <label>
+                        <b>
+                            Description:
+                        </b>
+                    </label>
+                    <br></br>
+                    <textarea
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        rows="4"
+                        cols="45"
+                    >
+                    </textarea>
+                    <br></br>
+                    <label>
+                        <b>
+                            Calories:
+                        </b>
+                    </label>
+                    <input
+                        type="number"
+                        value={calories}
+                        onChange={(e) => setCalories(e.target.value)}
+                    />
+                    <br></br>
+                    <label>
+                        <b>
+                            Prep-time:
+                        </b>
+                    </label>
+                    <input
+                        type="number"
+                        value={prep}
+                        onChange={(e) => setPrep(e.target.value)}
+                    />
+                    <br></br>
+                    <label>
+                        <b>
+                            Pic:
+                        </b>
+                    </label>
+                    <br></br>
+                    <textarea value={pic}
+                        onChange={(e) => setPic(e.target.value)}
+                        rows="4"
+                        cols="45"
+                    >
+                    </textarea>
+                    <br></br>
+                    <div className="addIngredient">
+                        <button className="button" type="button" onClick={addIngredient}>Add Ingredient</button>
+                        <input
+                            className="ingredientInput"
+                            type="text"
+                            value={ingredient}
+                            onChange={(e) => setIngredient(e.target.value)}
+                        />
+                        {ingredients.map((ingredient, index) => {
+                            return <p key={index + 1}><b>{index + 1}.</b> {ingredient}</p>
+                        })}
+                    </div>
+                    <br></br>
+                    <div className="addStep">
+                        <button className="button" type="button" onClick={addStep}>Add Step</button>
+                        <textarea
+                            className="stepInput"
+                            type="text"
+                            value={step}
+                            onChange={(e) => setStep(e.target.value)}
+                            rows="3"
+                            cols="45"
+                        />
+                        {steps.map((step, index) => {
+                            return <p key={index + 1}><b>Step {index + 1}.</b> {step}</p>
+                        })}
+                    </div>
+                    <br></br>
+                    <input
+                        className="editButton"
+                        type="submit" />
+                    <br></br>
+                </form>
+                <br></br>
+            </div>
         </>
     )
 }

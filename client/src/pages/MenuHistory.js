@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { MenuContext } from '../components/App';
 import MenuHistoryCard from './MenuHistoryCard'
 
+
 function MenuHistory() {
 
     const { menus } = useContext(MenuContext)
@@ -12,10 +13,10 @@ function MenuHistory() {
 
     return (
         <>
-        <p onClick={handleClick}>click</p>
-
+        <br></br>
             {menus.map((menu) => {
-                return <MenuHistoryCard key={menu.id} menu={menu}/>
+                const id = menu.id * Math.random()
+                return <MenuHistoryCard key={id} menu={menu}/>
             })}
 
         </>

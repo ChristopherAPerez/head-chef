@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Routes, Route } from "react-router-dom";
 import { UserContext } from '../components/App';
 import RecipeCard from './RecipeCard';
 
@@ -6,23 +7,26 @@ import { RecipeContext } from './Recipes';
 
 function RecipeList() {
 
-    const { user } = useContext(UserContext)
-
     const { allRecipes, setAllRecipes } = useContext(RecipeContext)
 
-    function handleClick() {
-        console.log(user.recipes)
-        console.log(allRecipes)
-        console.log(setAllRecipes)
+    function updatedRecipes(update) {
+        const updatedRecipes = allRecipes.map((recipe) => {
+            if (recipe.id === update.id) {
+                return update;
+            } else {
+                return recipe;
+            }
+        });
+        setAllRecipes(updatedRecipes);
     }
 
     return (
         <>
-        {allRecipes.map((recipe) => {
-            return <RecipeCard key={recipe.id} recipe={recipe}/>
-        })}
-        <button onClick={handleClick}>RecipeList</button>
+            {allRecipes.map((recipe) => {
+                return <RecipeCard key={recipe.id} recipe={recipe} updatedRecipes={updatedRecipes} />
+            })}
         </>
+
     )
 }
 

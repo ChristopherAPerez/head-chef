@@ -1,11 +1,12 @@
 .App {
   text-align: center;
-  width: 1000px;
-  min-height: 750px;
+  width: 500px;
+  min-height: 533px;
+  max-height: 533px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 80px;
-  margin-bottom: 80px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   font-family: "Papyrus";
   padding-bottom: 50px;
   box-shadow: 0 30px 40px rgb(0, 0, 0);
@@ -13,7 +14,16 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-color: white;
+  background-color: lightblue;
+
+  border: 5px solid black;
+  border-radius: 5px;
+
+  overflow: scroll;
+}
+
+.App::-webkit-scrollbar {
+  display: none;
 }
 
 .App-logo {
@@ -46,6 +56,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -53,44 +64,429 @@
 
 /* CSS */
 
-.charts{
+.addIngredient{
   width: 400px;
-  height: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid black;
+  background-color: lightblue;
+  padding: 5px;
 }
 
-.logo{
+.addRecipeForm{
   width: 400px;
-  height: 200px;
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.addStep{
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid black;
+  background-color: lightblue;
+  padding: 5px;
+}
+
+.button {
+  --b: 3px;
+  /* border thickness */
+  --s: .45em;
+  /* size of the corner */
+  --color: black;
+
+  padding: calc(.5em + var(--s)) calc(.9em + var(--s));
+  color: var(--color);
+  --_p: var(--s);
+  background:
+    conic-gradient(from 90deg at var(--b) var(--b), #ffc0cb 90deg, var(--color) 0) var(--_p) var(--_p)/calc(100% - var(--b) - 2*var(--_p)) calc(100% - var(--b) - 2*var(--_p));
+  transition: .3s linear, color 0s, background-color 0s;
+  font-size: 16px;
+
+  border: 0;
+
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button:hover,
+.button:focus-visible,
+.closeButton:hover,
+.button:focus-visible {
+  --_p: 0px;
+  outline-offset: .05em;
+  color: yellow;
+}
+
+.button:active,
+.closeButton:active {
+  background: rgb(255, 192, 203);
+  color: #fff;
+}
+
+.closeButton,
+.editButton {
+  --b: 3px;
+  /* border thickness */
+  --s: .45em;
+  /* size of the corner */
+  --color: black;
+
+  padding: calc(.5em + var(--s)) calc(.9em + var(--s));
+  color: var(--color);
+  --_p: var(--s);
+  background:
+    conic-gradient(from 90deg at var(--b) var(--b), lightblue 90deg, var(--color) 0) var(--_p) var(--_p)/calc(100% - var(--b) - 2*var(--_p)) calc(100% - var(--b) - 2*var(--_p));
+  transition: .3s linear, color 0s, background-color 0s;
+  font-size: 16px;
+
+  border: 0;
+
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.editButton:hover {
+  --_p: 0px;
+  outline-offset: .05em;
+  color: yellow;
+}
+
+.editButton:active {
+  background: rgb(255, 192, 203);
+  color: #fff;
+}
+
+.chartStats {
+  width: 100%;
+  font-size: 16px;
+  background-color: lightblue;
+  height: 100px;
+}
+
+.chartDoughnut {
+  margin-left: auto;
+  margin-right: auto;
+  width: 200px;
+  font-size: 16px;
+  background-color: lightblue;
+  height: 30px;
+}
+
+.closeButton {
+  float: right;
+}
+
+.colors {
+  display: inline-block;
+  padding: 10px;
+}
+
+.currentMenu {
+  border: 3px solid #000000;
+  border-radius: 3px;
+  width: 406px;
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: separate;
+}
+
+.currentMenuBody {
+  background-color: lightblue;
+}
+
+.deets {
+  border: 2px solid #000000;
+}
+
+.egg {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 326px;
+  height: 380px;
+  background-color: pink;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+}
+
+.friendContainer {
+  width: 450px;
+  min-height: 350px;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: pink;
+}
+
+.friendMenuTable {
+  width: 300px;
+  float: right;
+}
+
+.friendTable {
+  width: 150px;
+  float: left;
+  border-collapse: separate;
+}
+
+.friendTabletd {
+  width: 100px;
+  background-color: #add8e6;
+  border: 1px solid black;
+  text-align: left;
+}
+
+.indent {
+  text-indent: 2em
+}
+
+
+.ingredientsTable{
+  width: 500px;
+}
+
+.latestMenuTable{
+  background-color: #add8e6;
+}
+
+.logo {
+  width: 200px;
+  height: 150px;
 }
 
 .navlink {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #ddd;
-  background-color: rgb(155, 218, 239);
   color: #333;
   text-decoration: none;
   font-weight: bold;
   margin-left: auto;
   margin-right: auto;
-  width: 100px;
-  height: 100px;
+  width: 55px;
+  height: 55px;
 }
 
 .navlink:hover {
-  background-color: #ff00f2;
+  background-color: #fbbbc3;
+  color: yellow;
 }
+
+.newRecipeForm{
+  width: 450px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: pink;
+  border: 3px solid black;
+}
+
+.profilePic {
+  background-color: lightblue;
+  border: 1px solid black;
+}
+
+.profileTable {
+  background-color: #ffc0cb;
+  margin-left: auto;
+  margin-right: auto;
+  width: 470px;
+  height: 350px;
+  border: 3px solid black;
+  border-radius: 10px;
+}
+
+.slot {
+  float: left;
+  border: 1px solid black;
+  background-color: #fbbbc3;
+}
+
+.slot:hover {
+  background-color: #fbbbc3;
+  color: yellow;
+}
+
+.recipeImage {
+  border: 1px solid black;
+}
+
+.recipeTable {
+  background-color: #fbbbc3;
+  font-size: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-bottom: 5px;
+
+  border-collapse: separate;
+
+  width: 90%;
+  border: 5px solid black;
+  border-radius: 5px;
+}
+
+.recipeTableTwo {
+  background-color: #fbbbc3;
+  font-size: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-bottom: 5px;
+
+  border-collapse: collapse;
+
+  width: 95%;
+}
+
+.recipeTableDiv {
+  background-color: #fbbbc3;
+  font-size: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+
+  border-collapse: separate;
+
+  width: 90%;
+  border: 5px solid black;
+  border-radius: 5px;
+}
+
+.recipeText{
+  text-align: left;
+  width: 450px;
+}
+
+/* table tbody {
+  border: 10px solid black;
+}
+
+table tr {
+  border: 1px solid black;
+}
+
+table td {
+  border: 1px solid black;
+} */
 
 .rectangle {
-  width: 600px;
-  height: auto;
-  border: 1px solid black;
+  width: 400px;
+  max-height: 300px;
   margin-left: auto;
   margin-right: auto;
 }
 
-.table {
+.navTable {
   margin-left: auto;
   margin-right: auto;
+  border: 1px solid Pink;
+  border-collapse: collapse;
+}
+
+.stepTable{
+
+}
+
+
+.tableDown {
+  border: 3px solid black;
+  background-color: #fbbbc3;
+}
+
+.tableDown:hover {
+  background-color: #fbbbc3;
+  color: yellow;
+}
+
+.menuHistoryTable {
+  background-color: #fbbbc3;
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5px;
+  border: 3px solid black;
+  border-collapse: collapse;
+}
+
+.menuHistorySlot {
+  border: 3px solid black;
+}
+
+.modal {
+  background: Pink;
+  margin: -10px;
+}
+
+.modalNav {
+  margin-left: auto;
+  margin-right: auto;
+  width: 350px;
+}
+
+Modal.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+Modal.content {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  right: 40px;
+  bottom: 40px;
+  border: 1px solid #000000;
+  background: #160101;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 4px;
+  outline: none;
+  padding: 20px;
+}
+
+.ReactModal__Content--after-open {
+  position: absolute;
+  inset: 40px;
+  border: 10px solid black;
+  border-radius: 5px;
+  background: pink;
+  overflow: auto;
+  border-radius: 4px;
+  outline: none;
+  padding: 20px;
+}
+
+.ReactModal__Content--after-open::-webkit-scrollbar {
+  display: none;
+}
+
+.reviewTable{
+  width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 3px solid black;
+  border-radius: 3px;
+  background-color: lightblue;
+
+  border-collapse: separate;
+}
+
+.viewTable{
+  text-align: left;
+  width: 930px
+}
+
+.tableDeetsLeft{
+  float: left;
+}
+
+.tableDeetsRight{
+float: right;
+width: 600px;
 }

@@ -12,7 +12,7 @@ class ReviewsController < ApplicationController
 
     def show
         review = Review.find_by(id: params[:id])
-        render json: review, include: ['recipes']
+        render json: review, include: ['recipe']
     end
 
     def update
@@ -28,7 +28,7 @@ class ReviewsController < ApplicationController
     private
 
     def review_params
-        params.permit(:rating, :comment, :recipe_id, :user_id)
+        params.permit(:rating, :comment, :recipe_id, :user_id, :username)
     end
 
 end
