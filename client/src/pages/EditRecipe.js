@@ -3,7 +3,7 @@ import EditIngredients from "./EditIngredients";
 import { UserContext } from '../components/App';
 
 
-function EditRecipe({ setIngredients, ingredients, recipe, pic, setPic, description, setDescription, calories, setCalories, prep, setPrep, steps, setSteps }) {
+function EditRecipe({ setIngredients, ingredients, recipe, pic, setPic, description, setDescription, calories, setCalories, prep, setPrep }) {
 
     const { user } = useContext(UserContext)
 

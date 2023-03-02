@@ -1,9 +1,5 @@
-import React, { useContext, useState, useEffect, createContext } from "react";
-import { UserContext } from '../components/App';
-import { MenuContext } from '../components/App';
-
+import React, { useState } from "react";
 import MenuHistory from './MenuHistory'
-// import Menu from './Menu'
 import NewMenuForm from './NewMenuForm'
 import { useNavigate } from "react-router-dom"
 
@@ -11,41 +7,8 @@ function Menus() {
 
     const navigate = useNavigate()
 
-    const { menus, setMenus } = useContext(MenuContext)
-
-    // const [menus, setMenus] = useState(null)
-    // const [allMenus, setAllMenus] = useState([])
-    // const [unpublish, setUnPublish] = useState(null)
     const [page, setPage] = useState("Menu")
 
-    // useEffect(() => {
-    //     fetch("/menus").then((r) => {
-    //         if (r.ok) {
-    //             r.json().then((menu) => {
-    //                 setMenus(menu)
-    //             })
-    //         }
-    //     });
-    // }, []);
-
-    // useEffect(() => {
-    //     fetch("/published").then((r) => {
-    //         if (r.ok) {
-    //             r.json().then((menu) => {
-    //                 setUnPublish(menu)
-    //             })
-    //         }
-    //     });
-    // }, []);
-
-    // function handleClick() {
-    //     console.log(unpublish)
-    // }
-
-    function handleClick() {
-        // console.log(menus)
-        // console.log(allMenus)
-    }
 
     function handleNewRecipeClick() {
         setPage("New Menu")

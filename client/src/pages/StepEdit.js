@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-function StepEdit({ step, index, steps, setSteps }) {
-
-    const [newStep, setNewStep] = useState(step)
+function StepEdit() {
 
     return (
         <>

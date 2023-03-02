@@ -7,10 +7,6 @@ function MenuHistory() {
 
     const { menus } = useContext(MenuContext)
 
-    function handleClick(){
-        console.log(menus)
-    }
-
     return (
         <>
         <br></br>

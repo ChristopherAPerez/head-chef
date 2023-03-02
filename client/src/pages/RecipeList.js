@@ -1,6 +1,4 @@
 import React, { useContext } from "react";
-import { Routes, Route } from "react-router-dom";
-import { UserContext } from '../components/App';
 import RecipeCard from './RecipeCard';
 
 import { RecipeContext } from './Recipes';

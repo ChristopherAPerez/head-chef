@@ -11,6 +11,13 @@ class RecipesController < ApplicationController
         render json: recipes, include: ['reviews', 'user']
     end
 
+    def my_recipes_menus
+        user = User.find_by(id: session[:user_id])
+        recipe = user.recipes.find_by(id: params[:id])
+        menus = recipe.menus.where(publish: true)
+        render json: menus, include: ['user', 'menu_to_recipes']
+    end
+
     def create
         recipe = Recipe.create(recipe_params)
         render json: recipe, include: ['reviews', 'user']

@@ -1,11 +1,9 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom"
-// import { useLoginUser } from './UserContext'
 import { UserContext } from './App';
 
 function LoginForm() {
 
-  // const loginUser = useLoginUser()
   const { setUser, setLoading } = useContext(UserContext)
 
   const navigate = useNavigate()

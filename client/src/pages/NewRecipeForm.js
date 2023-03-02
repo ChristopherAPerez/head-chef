@@ -1,14 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
 import { UserContext } from '../components/App';
 import { RecipeContext } from './Recipes';
-import { useNavigate } from "react-router-dom"
-import App from "../components/App";
 
 function NewRecipeForm() {
 
-    const navigate = useNavigate()
-
-    const { user } = useContext(UserContext)
+    const { user, myRecipes, setMyRecipes } = useContext(UserContext)
     const { setPage, allRecipes, setAllRecipes, recipes, setRecipes } = useContext(RecipeContext)
 
     const [name, setName] = useState("")
@@ -27,29 +23,19 @@ function NewRecipeForm() {
       }, []);
 
     function addStep(e) {
-
         e.preventDefault();
-
         setSteps([...steps, step])
-
         setStep("")
-
     }
 
     function addIngredient(e) {
-
         e.preventDefault();
-
         setIngredients([...ingredients, ingredient])
-
         setIngredient("")
-
     }
 
     function handleSubmit(e) {
-
         e.preventDefault();
-
         fetch("recipes", {
             method: "POST",
             headers: {
@@ -67,12 +53,12 @@ function NewRecipeForm() {
                 user_id: user.id
             }),
         })
-
             .then((r) => {
                 if (r.ok) {
                     r.json().then((recipe) => {
                         setRecipes([...recipes, recipe])
                         setAllRecipes([...allRecipes, recipe])
+                        setMyRecipes([...myRecipes, recipe])
 
                         setName("")
                         setMeal("Breakfast")
@@ -85,7 +71,6 @@ function NewRecipeForm() {
                         setPrep(0)
                         setPic("")
                         setPage("Recipes")
-                        window.location.reload();
                     });
                 } else {
                     r.json().then((err) => {
@@ -93,7 +78,6 @@ function NewRecipeForm() {
                     })
                 }
             })
-            window.scrollTo(0, 0);
     }
 
 

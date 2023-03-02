@@ -2,14 +2,10 @@ import React, { useState, useEffect, createContext } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Header from "./Header"
-import CurrentMenu from "./CurrentMenu"
 import NavRectangle from "./NavRectangle"
 
-// import LoggedIn from "./LoggedIn"
 import Menus from "../pages/Menus"
-// import Inventory from "../pages/Inventory"
 import Recipes from "../pages/Recipes"
-// import RecipePage from "../pages/RecipePage"
 import Profile from "../pages/Profile"
 import Stats from "../pages/Stats"
 import FriendsList from "../pages/FriendsList"
@@ -21,8 +17,7 @@ import SignUpForm from "./SignUpForm";
 import stir from '../images/Pot RICE blue.GIF'
 
 import './App.css';
-
-// import ReactModal from 'react-modal';
+import MyRecipeList from "../pages/MyRecipeList";
 
 export const UserContext = createContext();
 export const MenuContext = createContext();
@@ -33,19 +28,15 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null)
   const [menus, setMenus] = useState(null)
-  const [recipes, setRecipes] = useState([])
-  // const [recipePage, setRecipePage] = useState({})
   const [friends, setFriends] = useState([])
+  const [myRecipes, setMyRecipes] = useState([])
 
   const [unpublish, setUnPublish] = useState(null)
   const [unpublishRecipes, setUnPublishRecipes] = useState([])
   const [unpublishMenuToRecipes, setUnpublishMenuToRecipes] = useState([])
 
   const [stats, setStats] = useState([]);
-  
 
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [message, setMessage] = useState('');
 
   useEffect(() => {
 
@@ -53,8 +44,8 @@ function App() {
       if (r.ok) {
         r.json().then((user) => {
           setUser(user)
-          setRecipes(user.recipes)
           setFriends(user.friends)
+          setMyRecipes(user.recipes)
           setLoading(false)
         })
       }
@@ -92,17 +83,21 @@ function App() {
     });
   }, []);
 
+  function updatedMyRecipes(update) {
+    const updatedMyRecipes = myRecipes.map((recipe) => {
+        if (recipe.id === update.id) {
+            return update;
+        } else {
+            return recipe;
+        }
+    });
+    setMyRecipes(updatedMyRecipes);
+}
 
-
-  function handleClick() {
-    console.log(user)
-    console.log(menus)
-    console.log(recipes)
-    console.log(stats)
-
-  }
-
-
+  function deleteMyRecipe(id) {
+    const updatedMyRecipes = myRecipes.filter((recipe) => recipe.id !== id);
+    setMyRecipes(updatedMyRecipes);
+}
 
   return (
     <div className='App'>
@@ -126,7 +121,7 @@ function App() {
                 </PublishContext.Provider>
               </UserContext.Provider>
               <br></br>
-              <UserContext.Provider value={{ user, setUser, setLoading, stats, setStats, friends, setFriends }}>
+              <UserContext.Provider value={{ user, setUser, setLoading, stats, setStats, friends, setFriends, myRecipes, setMyRecipes, deleteMyRecipe, updatedMyRecipes }}>
                 <MenuContext.Provider value={{ menus, setMenus }} >
                   <PublishContext.Provider value={{ unpublish, setUnPublish, unpublishRecipes, setUnPublishRecipes, unpublishMenuToRecipes, setUnpublishMenuToRecipes }} >
                     <Routes>
@@ -135,6 +130,8 @@ function App() {
                       <Route path="/friends" element={<FriendsList />}>
                       </Route>
                       <Route path="/recipes" element={<Recipes />}>
+                      </Route>
+                      <Route path="/my_recipes" element={<MyRecipeList />}>
                       </Route>
                       <Route path="/stats" element={<Stats />}>
                       </Route>

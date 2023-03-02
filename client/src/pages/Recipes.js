@@ -19,8 +19,6 @@ function Recipes() {
     const [page, setPage] = useState("Recipes")
 
     const [search, setSearch] = useState("")
-    const [searchData, setSearchData] = useState([])
-
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -49,7 +47,6 @@ function Recipes() {
     }, []);
 
     function handleSearch(e) {
-
         e.preventDefault()
 
         fetch(`/recipes_search?recipe_name=${search}`).then((r) => {
@@ -62,16 +59,12 @@ function Recipes() {
         });
     }
 
-    function handleClick() {
-        console.log(searchData)
-    }
-
     function handleNewRecipeClick() {
         setPage("New Recipes")
     }
 
     function handleMyRecipesClick() {
-        setPage("My Recipes")
+        navigate("/my_recipes")
     }
 
     function handleRecipeClick() {

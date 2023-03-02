@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 
 import MenuRecipes from './MenuRecipes';
-import DeleteButton from './DeleteButton'
 
 import { UserContext } from '../components/App';
 import { MenuContext } from '../components/App';
@@ -10,11 +9,10 @@ import { PublishContext } from '../components/App';
 function NewMenuForm() {
 
     const { user } = useContext(UserContext)
-    const { unpublish, setUnPublish, unpublishRecipes, setUnPublishRecipes, unpublishMenuToRecipes, setUnpublishMenuToRecipes } = useContext(PublishContext)
+    const { unpublish, setUnPublish, unpublishRecipes, setUnPublishRecipes, setUnpublishMenuToRecipes } = useContext(PublishContext)
     const { menus, setMenus } = useContext(MenuContext)
 
     const [phoneNumber, setPhoneNumber] = useState('');
-    const [message, setMessage] = useState('');
 
     function handleCreate() {
         const date = new Date();
@@ -45,16 +43,15 @@ function NewMenuForm() {
 
     }
 
-    function published() {
-        setUnPublish(unpublish)
-    }
-
     function sendSms() {
         fetch('/send_sms', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            body: JSON.stringify({
+                number: phoneNumber
+            }),
         })
             .then(res => res.json())
             .then(data => console.log(data))
@@ -77,7 +74,6 @@ function NewMenuForm() {
                         setMenus([...menus, menu])
                         setUnPublish(null)
                         setUnPublishRecipes([])
-                        console.log(menu)
                     })
                 } else {
                     r.json().then((err) => {
@@ -87,26 +83,11 @@ function NewMenuForm() {
             })
     }
 
-    function DeleteUnpublishRecipes(id) {
-        const updatedUnpublishedRecipe = unpublishRecipes.filter((recipe) => recipe.id !== id);
-        setUnPublishRecipes(updatedUnpublishedRecipe);
-    }
-
-    function DeleteMenuToRecipe(id) {
-        const updatedMenuToRecipe = unpublishMenuToRecipes.filter((menu_to_recipe) => menu_to_recipe.id !== id);
-        setUnpublishMenuToRecipes(updatedMenuToRecipe);
-    }
-
-    ///////////////
-
     function unpublished() {
-
-        // sendSms()
-
+        sendSms()
         setTimeout(() => {
             publishMenu()
-        }, 4000);
-
+        }, 3000);
     }
 
     function clearRecipe() {
@@ -123,8 +104,6 @@ function NewMenuForm() {
             }
         });
     }
-
-    ///////////////
 
 
     return (

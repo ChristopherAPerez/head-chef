@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from '../components/App';
-import { MenuContext } from "../components/App";
 import { PublishContext } from '../components/App';
 import { RecipeContext } from './Recipes';
 
@@ -17,9 +16,8 @@ import ReviewCard from "./ReviewCard";
 
 function RecipeCard({ recipe, updatedRecipes }) {
 
-    const { user, recipePage, setRecipePage, friends, setFriends } = useContext(UserContext)
-    const { menus, setMenus } = useContext(MenuContext)
-    const { unpublish, setUnPublish, unpublishRecipes, setUnPublishRecipes, unpublishMenuToRecipes, setUnpublishMenuToRecipes } = useContext(PublishContext)
+    const { user, friends, setFriends, deleteMyRecipe } = useContext(UserContext)
+    const { unpublish, unpublishRecipes, setUnPublishRecipes, unpublishMenuToRecipes, setUnpublishMenuToRecipes } = useContext(PublishContext)
     const { deleteRecipe } = useContext(RecipeContext)
 
     const [edit, setEdit] = useState(false);
@@ -42,10 +40,6 @@ function RecipeCard({ recipe, updatedRecipes }) {
 
     const [addNewStep, setAddNewStep] = useState("");
 
-    function handleClick() {
-        console.log(recipe.user)
-    }
-
     function handleMenu() {
 
         fetch("menu_to_recipes", {
@@ -54,6 +48,10 @@ function RecipeCard({ recipe, updatedRecipes }) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                name: name,
+                description: description,
+                calories: calories,
+                prep_time: prep,
                 menu_id: unpublish.id,
                 recipe_id: recipe.id
             }),
@@ -73,17 +71,6 @@ function RecipeCard({ recipe, updatedRecipes }) {
             })
 
 
-    }
-
-    function updatedSteps(update) {
-        const updatedSteps = steps.map((step) => {
-            if (step === update) {
-                return update;
-            } else {
-                return step;
-            }
-        });
-        setSteps(updatedSteps);
     }
 
     function handleEdit() {
@@ -138,11 +125,6 @@ function RecipeCard({ recipe, updatedRecipes }) {
         setModalIsOpen(false);
     };
 
-    function itsThere() {
-        console.log(recipe.active)
-        // console.log(unpublishRecipes)
-        // console.log(unpublishRecipes.includes(recipe))
-    }
 
     function handlePage(value) {
         setPage(value)
@@ -154,6 +136,7 @@ function RecipeCard({ recipe, updatedRecipes }) {
         }).then((r) => {
             if (r.ok) {
                 deleteRecipe(recipe.id);
+                deleteMyRecipe(recipe.id);
             } else {
                 r.json().then((err) => {
                     alert(err.error)
@@ -222,7 +205,7 @@ function RecipeCard({ recipe, updatedRecipes }) {
             })
     }
 
-    function handleFollow(){
+    function handleFollow() {
         fetch(`/create_friendships/${recipe.user_id}`, {
             method: "POST",
             headers: {
@@ -235,7 +218,6 @@ function RecipeCard({ recipe, updatedRecipes }) {
         }).then((r) => {
             if (r.ok) {
                 r.json().then((friendship) => {
-                    console.log(friendship)
                     setFriends([...friends, friendship]);
                 });
             } else {
@@ -254,7 +236,7 @@ function RecipeCard({ recipe, updatedRecipes }) {
                     <tbody>
                         <tr >
                             <td >
-                                <p onClick={handleClick}><b>{recipe.recipe_name}</b> by: Username</p>
+                                <p><b>{recipe.recipe_name}</b> by: Username</p>
                             </td>
                         </tr>
                     </tbody>
@@ -324,14 +306,19 @@ function RecipeCard({ recipe, updatedRecipes }) {
                                                             <img className="recipeImage" src={recipe.recipe_pic} alt={recipe.recipe_pic} width="300" height="300" />
                                                             <br></br>
                                                             <br></br>
-                                                            {user.id === recipe.user.id ? 
-                                                            <button className="editButton" onClick={handleEdit}>
-                                                                Edit
-                                                            </button> 
-                                                            : 
-                                                            <>
-                                                            <b>Created by: </b> <button className="editButton" onClick={handleFollow}>Follow {recipe.user_id}</button>
-                                                            </>
+                                                            {user.id === recipe.user.id ?
+                                                                <>
+                                                                    <button className="editButton" onClick={handleEdit}>
+                                                                        Edit Recipe
+                                                                    </button>
+                                                                    <button className="editButton" onClick={handleDelete}>
+                                                                        Delete Recipe
+                                                                    </button>
+                                                                </>
+                                                                :
+                                                                <>
+                                                                    <b>Created by: </b> <button className="editButton" onClick={handleFollow}>Follow {recipe.user_id}</button>
+                                                                </>
                                                             }
                                                         </td>
                                                     </tr>

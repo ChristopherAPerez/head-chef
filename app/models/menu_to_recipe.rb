@@ -1,6 +1,6 @@
 class MenuToRecipe < ApplicationRecord
-    belongs_to :menu
-    belongs_to :recipe
+    belongs_to :menu, dependent: :delete
+    belongs_to :recipe, dependent: :delete
 
     validate :array_length_limit
 

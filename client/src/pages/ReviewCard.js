@@ -1,6 +1,6 @@
 import React from "react";
 
-function ReviewCard({ review, index }) {
+function ReviewCard({ review }) {
 
     const stars = '🌟'
 

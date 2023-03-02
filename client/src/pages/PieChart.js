@@ -3,7 +3,6 @@ import { Chart, ArcElement } from 'chart.js'
 import { Doughnut } from 'react-chartjs-2';
 
 import { UserContext } from '../components/App';
-import { MenuContext } from '../components/App';
 
 Chart.register(ArcElement);
 
@@ -41,11 +40,6 @@ export default function PieChart( { trigger, setTrigger } ) {
                 data: total_data
             }
         ],
-    }
-
-    function handleClick() {
-        console.log(label)
-        console.log(total_data)
     }
 
     function handleSwitch() {

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 
 import menu from '../images/MENU Book pink.GIF'
 import heart from '../images/HeartHAND v3.GIF'
@@ -12,9 +12,7 @@ import { UserContext } from './App';
 
 function NavRectangle() {
 
-    const { user, setUser, setLoading, setStats } = useContext(UserContext)
-
-    const [inventory, setInventory] = useState(user.inventories)
+    const { setUser, setLoading } = useContext(UserContext)
 
     const linkStyle = {
         padding: "20px",

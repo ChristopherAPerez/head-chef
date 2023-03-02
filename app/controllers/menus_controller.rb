@@ -8,7 +8,7 @@ class MenusController < ApplicationController
     def index_published
         user = User.find_by(id: session[:user_id])
         menus = Menu.where(user_id: user.id).where(publish: true)
-        render json: menus, include: ['recipes']
+        render json: menus, include: ['menu_to_recipes', 'recipes']
     end
 
     def create
@@ -71,11 +71,11 @@ class MenusController < ApplicationController
         menus = Menu.where(user_id: user.id).where(publish: true).limit(5).order(created_at: :desc)
 
         array = menus.map do |menu|
-                menu.recipes
+                menu.menu_to_recipes
         end
 
-        total_cal = array.map do |recipe|
-            cal = recipe.reduce(0) { |sum, element| sum + element.calories }
+        total_cal = array.map do |meal|
+            cal = meal.reduce(0) { |sum, element| sum + element.calories }
         end
         data = menus.map.with_index do |menu, index|
             {
@@ -94,11 +94,11 @@ class MenusController < ApplicationController
         menus = Menu.where(user_id: user.id).where(publish: true).limit(5).order(created_at: :desc)
 
         array = menus.map do |menu|
-                menu.recipes
+                menu.menu_to_recipes
         end
 
-        total_prep = array.map do |recipe|
-            cal = recipe.reduce(0) { |sum, element| sum + element.prep_time }
+        total_prep = array.map do |meal|
+            cal = meal.reduce(0) { |sum, element| sum + element.prep_time }
         end
 
         data = menus.map.with_index do |menu, index|

@@ -8,9 +8,8 @@ function FriendsList() {
 
     const navigate = useNavigate()
 
-    const { user, friends, setFriends } = useContext(UserContext)
+    const { friends } = useContext(UserContext)
 
-    // const [friends, setFriends] = useState(user.friends)
     const [page, setPage] = useState("")
     const [menu, setMenu] = useState(null)
     const [recipes, setRecipes] = useState([])
@@ -53,7 +52,7 @@ function FriendsList() {
                         {
                             page === "menu" ?
                                 <>
-                                    <MenuCard recipes={recipes} />
+                                    <MenuCard menu={menu} recipes={recipes} />
                                 </>
                                 :
                                 <></>

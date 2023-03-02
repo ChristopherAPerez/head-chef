@@ -40,7 +40,7 @@ class MenuToRecipesController < ApplicationController
     private
 
     def menu_to_recipe_params
-        params.permit(:menu_id, :recipe_id)
+        params.permit(:name, :description, :calories, :prep_time, :menu_id, :recipe_id)
     end
 
 end

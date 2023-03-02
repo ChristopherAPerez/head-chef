@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
   resources :recipes
   get "/users_recipe_index", to: "recipes#users_recipe_index"
+  get "/my_recipes_menus/:id", to: "recipes#my_recipes_menus"
   get "/recipes_search", to: "recipes#recipes_search"
   get "/recipes_filter", to: "recipes#recipes_filter"
   

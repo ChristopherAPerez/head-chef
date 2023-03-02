@@ -212,6 +212,16 @@
   border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
 }
 
+.eggRecipesList{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 326px;
+  height: 380px;
+  background-color: lightblue;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+}
+
 .friendContainer {
   width: 450px;
   min-height: 350px;
@@ -255,6 +265,10 @@
 .logo {
   width: 200px;
   height: 150px;
+}
+
+.mealCardImage{
+  border: 1px solid black;
 }
 
 .navlink {

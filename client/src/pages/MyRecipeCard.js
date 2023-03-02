@@ -1,20 +1,14 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from '../components/App';
-import { MenuContext } from "../components/App";
 import { PublishContext } from '../components/App';
 import { RecipeContext } from './Recipes';
-import { useNavigate } from "react-router-dom"
-import RecipePage from "./RecipePage";
 import EditRecipe from "./EditRecipe";
-import { Link } from "react-router-dom"
-
 import ReactModal from 'react-modal';
 
 function MyRecipeCard( { recipe, updatedRecipes } ) {
 
-    const { user, recipePage, setRecipePage } = useContext(UserContext)
-    const { menus, setMenus } = useContext(MenuContext)
-    const { unpublish, setUnPublish, unpublishRecipes, setUnPublishRecipes, unpublishMenuToRecipes, setUnpublishMenuToRecipes } = useContext(PublishContext)
+    const { user  } = useContext(UserContext)
+    const { unpublish, unpublishRecipes, setUnPublishRecipes, unpublishMenuToRecipes, setUnpublishMenuToRecipes } = useContext(PublishContext)
     const { deleteRecipe } = useContext(RecipeContext)
 
     const [edit, setEdit] = useState(false);
@@ -26,18 +20,6 @@ function MyRecipeCard( { recipe, updatedRecipes } ) {
     const [calories, setCalories] = useState(recipe.calories);
     const [prep, setPrep] = useState(recipe.prep_time);
     const [steps, setSteps] = useState(recipe.steps);
-
-    const new_Recipe = {
-        id: recipe.id,
-        meal: meal,
-        recipe_pic: pic,
-        recipe_name: name,
-        description: description,
-        calories: calories,
-        prep_time: prep,
-        steps: steps,
-        active: true
-    }
 
     function handleClick() {
         console.log(recipe.user)

@@ -1,26 +1,8 @@
 import React from "react";
 
-import { PublishContext } from '../components/App';
-
 function MenuRecipes( { recipe, index } ) {
 
-    // const { unpublish } = useContext(PublishContext)
-
     const name = recipe.recipe_name.substring(0,29)
-
-    function handleClick(){
-        // fetch(`/menu_to_recipes/`, {
-        //     method: "DELETE",
-        // }).then((r) => {
-        //     if (r.ok) {
-        //         delete unpublish[index]
-        //     } else {
-        //         r.json().then((err) => {
-        //             alert(err.error)
-        //         })
-        //     }
-        // });
-    }
 
     return (
         <>

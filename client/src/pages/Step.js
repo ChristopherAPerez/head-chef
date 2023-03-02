@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import StepEdit from './StepEdit';
 import { UserContext } from '../components/App';
 
 function Step({ recipe, step, index, steps, setSteps }) {

@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
 import EditProfile from "./EditProfile"
-import EditPic from "./EditPic"
 
 import { UserContext } from '../components/App';
 import { useNavigate } from "react-router-dom"
@@ -10,7 +9,6 @@ function Profile() {
   const navigate = useNavigate()
 
   const [isEditing, setIsEditing] = useState(false)
-  const [editPic, setEditPic] = useState(false)
 
   const { user } = useContext(UserContext)
 

@@ -1,16 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 
-function Ingredients({ ingredient, index }) {
+function Ingredients({ ingredient }) {
 
-    const [test, setTest] = useState(ingredient)
-
-    function handlePrint() {
-        console.log(test)
-    }
-
-    function handleSet() {
-        setTest(ingredient)
-    }
 
     return (
 

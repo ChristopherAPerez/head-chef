@@ -29,7 +29,7 @@ function Stats() {
         })
       }
     });
-  }, []);
+  }, [setStats]);
 
   function handleMainMenu(){
     navigate("/")

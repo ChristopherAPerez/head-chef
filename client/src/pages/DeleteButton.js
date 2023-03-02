@@ -4,7 +4,7 @@ import { PublishContext } from '../components/App';
 
 function MenuRecipes( { menu_to_recipe, index, DeleteMenuToRecipe, DeleteUnpublishRecipes } ) {
 
-    const { unpublish, unpublishRecipes, unpublishMenuToRecipes, setUnpublishMenuToRecipes } = useContext(PublishContext)
+    const { unpublishRecipes, unpublishMenuToRecipes } = useContext(PublishContext)
 
     function handleClick(){
         fetch(`/menu_to_recipes/${menu_to_recipe.id}`, {

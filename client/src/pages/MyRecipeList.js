@@ -1,27 +1,88 @@
-import React, { useContext } from "react";
-import MyRecipeCard from './MyRecipeCard'
-
-import { RecipeContext } from './Recipes';
+import React, { useState, useContext } from "react";
+import { UserContext } from '../components/App';
+import { useNavigate } from "react-router-dom"
 
 function MyRecipeList() {
-    const { recipes, setRecipes } = useContext(RecipeContext)
 
-    function updatedRecipes(update) {
-        const updatedRecipes = recipes.map((recipe) => {
-            if (recipe.id === update.id) {
-                return update;
-            } else {
-                return recipe;
-            }
-        });
-        setRecipes(updatedRecipes);
+    const navigate = useNavigate()
+
+    const [page, setPage] = useState("")
+    const [myRecipesMenus, setMyRecipesMenus] = useState([])
+    const { myRecipes, setMyRecipes } = useContext(UserContext)
+
+    function handleMainMenu() {
+        navigate("/")
     }
+
+    function handleRecipeClick() {
+        navigate("/recipes")
+    }
+
+    const length = myRecipesMenus.length
 
     return (
         <>
-        {recipes.map((recipe) => {
-            return <MyRecipeCard key={recipe.id} recipe={recipe} updatedRecipes={updatedRecipes}/>
-        })}
+            <button className="button" onClick={handleMainMenu}>Main Menu</button>
+            <br></br>
+            <button className="button" onClick={handleRecipeClick}>Recipes</button>
+            <button className="button">New Recipe</button>
+            <br></br>
+            <br></br>
+            <div className='friendContainer'>
+                <table className='friendTable'>
+                    <tbody>
+                        <tr >
+                            <td>
+                                <b>My Recipes</b>
+                            </td>
+                        </tr>
+                        {myRecipes.map((recipe) => {
+                            function handleRecipeClick() {
+                                fetch(`/my_recipes_menus/${recipe.id}`).then((r) => {
+                                    if (r.ok) {
+                                        r.json().then((menus) => {
+                                            setMyRecipesMenus(menus)
+                                            setPage("menu")
+                                        })
+                                    } else {
+                                        r.json().then((err) => {
+                                            alert(err.error)
+                                        })
+                                    }
+                                });
+                            }
+                            return <tr key={recipe.id} onClick={handleRecipeClick} >
+                                <td>
+                                    <b>{recipe.recipe_name}</b>
+                                </td>
+                            </tr>
+                        })}
+                    </tbody>
+                </table>
+                <table className='friendMenuTable'>
+                    <tbody>
+                        <tr >
+                            <td>
+                                <b>List of Menus</b><br></br>
+                                {page === 'menu' ? <span>Your Recipe shows up <b>{length}</b> time in menus</span> : <></>}
+                            </td>
+                        </tr>
+                        {
+                            page === "menu" ?
+                                <>
+                                    {myRecipesMenus.map((menu) => {
+                                        const id = menu.id * Math.random()
+                                        return <tr key={id}>
+                                            <td>{menu.user.username} {menu.menu_date}</td>
+                                        </tr>
+                                    })}
+                                </>
+                                :
+                                <></>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </>
     )
 }
