@@ -6,7 +6,7 @@ function Step({ recipe, step, index, steps, setSteps }) {
     const { user } = useContext(UserContext)
 
     const [edit, setEdit] = useState(false)
-    const [newStep, setNewStep] = useState(step)
+    const [newStep, setNewStep] = useState("")
 
     function handleEdit() {
         console.log(step)
@@ -63,7 +63,7 @@ function Step({ recipe, step, index, steps, setSteps }) {
                 <tr>
                     <td>
                         {user.id === recipe.user.id ? <button className='editButton' onClick={handleEdit}>Edit</button> : <></>}
-                        Step {index + 1}. {step}
+                        <b>Step {index + 1}.</b> {step}
                     </td>
                 </tr>
             )}

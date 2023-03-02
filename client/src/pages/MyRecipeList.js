@@ -8,7 +8,7 @@ function MyRecipeList() {
 
     const [page, setPage] = useState("")
     const [myRecipesMenus, setMyRecipesMenus] = useState([])
-    const { myRecipes, setMyRecipes } = useContext(UserContext)
+    const { myRecipes } = useContext(UserContext)
 
     function handleMainMenu() {
         navigate("/")
@@ -28,7 +28,7 @@ function MyRecipeList() {
             <button className="button">New Recipe</button>
             <br></br>
             <br></br>
-            <div className='friendContainer'>
+            <div className='myRecipeContainer'>
                 <table className='friendTable'>
                     <tbody>
                         <tr >
@@ -52,14 +52,14 @@ function MyRecipeList() {
                                 });
                             }
                             return <tr key={recipe.id} onClick={handleRecipeClick} >
-                                <td>
+                                <td className="myRecipeTabletd">
                                     <b>{recipe.recipe_name}</b>
                                 </td>
                             </tr>
                         })}
                     </tbody>
                 </table>
-                <table className='friendMenuTable'>
+                <table>
                     <tbody>
                         <tr >
                             <td>
@@ -67,21 +67,32 @@ function MyRecipeList() {
                                 {page === 'menu' ? <span>Your Recipe shows up <b>{length}</b> time in menus</span> : <></>}
                             </td>
                         </tr>
-                        {
-                            page === "menu" ?
-                                <>
-                                    {myRecipesMenus.map((menu) => {
-                                        const id = menu.id * Math.random()
-                                        return <tr key={id}>
-                                            <td>{menu.user.username} {menu.menu_date}</td>
-                                        </tr>
-                                    })}
-                                </>
-                                :
-                                <></>
-                        }
                     </tbody>
                 </table>
+                {
+                    page === "menu" ?
+                        <div className="listofMenus">
+                            <table>
+                                <tbody>
+                                    {
+                                        page === "menu" ?
+                                            <>
+                                                {myRecipesMenus.map((menu) => {
+                                                    const id = menu.id * Math.random()
+                                                    return <tr key={id}>
+                                                        <td className="myRecipeMenusTabletd" >{menu.user.username} {menu.menu_date}</td>
+                                                    </tr>
+                                                })}
+                                            </>
+                                            :
+                                            <></>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        :
+                        <></>
+                }
             </div>
         </>
     )

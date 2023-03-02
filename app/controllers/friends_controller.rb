@@ -1,9 +1,5 @@
 class FriendsController < ApplicationController
-    
-    def index
-        friends = User.find_by(id: 1).friends
-        render json: friends
-    end
+    wrap_parameters format: []
 
     def friend_last_menu
         user = User.find_by(id: params[:id])

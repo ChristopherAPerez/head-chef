@@ -1,8 +1,9 @@
 class InventoriesController < ApplicationController
 
     def index
-        inventories = Inventory.all
-        render json: inventories, include: ['user']
+            menu = Menu.find_by(publish: false)
+            menu_to_recipes = menu.menu_to_recipes
+            render json: menu_to_recipes
     end
 
     def create

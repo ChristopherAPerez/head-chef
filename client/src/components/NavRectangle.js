@@ -7,16 +7,22 @@ import graph from '../images/PIE CHART-BAR GRAPH pink.GIF'
 import profile from '../images/CHEF PROFILE pink.GIF'
 import peace from '../images/Logout PEACE pink.GIF'
 
-import { NavLink } from "react-router-dom"
+import { useNavigate, NavLink } from "react-router-dom"
 import { UserContext } from './App';
 
 function NavRectangle() {
+
+    const navigate = useNavigate()
 
     const { setUser, setLoading } = useContext(UserContext)
 
     const linkStyle = {
         padding: "20px",
     };
+
+    function handleNavigation(value){
+        navigate(value)
+    }
 
     function handleLogoutClick() {
         fetch("/logout", { method: "DELETE" }).then((r) => {
@@ -33,7 +39,7 @@ function NavRectangle() {
                 <table className="navTable" >
                     <tbody>
                         <tr>
-                            <td className="tableDown">
+                            <td className="tableDown" onClick={() => handleNavigation("/menus")}>
                                 <NavLink className="navlink" to="/menus" style={linkStyle}>
                                     <img
                                         src={menu}
@@ -44,7 +50,7 @@ function NavRectangle() {
                                 </NavLink>
                                 Menu
                             </td>
-                            <td className="tableDown">
+                            <td className="tableDown" onClick={() => handleNavigation("/friends")}>
                                 <NavLink className="navlink" to="/friends" style={linkStyle}>
                                     <img
                                         src={heart}
@@ -57,7 +63,7 @@ function NavRectangle() {
                             </td>
                         </tr>
                         <tr>
-                            <td className="tableDown" >
+                            <td className="tableDown" onClick={() => handleNavigation("/recipes")}>
                                 <NavLink className="navlink" to="/recipes" style={linkStyle}>
                                     <img
                                         src={fruits}
@@ -68,7 +74,7 @@ function NavRectangle() {
                                 </NavLink>
                                 Recipes
                             </td>
-                            <td className="tableDown">
+                            <td className="tableDown" onClick={() => handleNavigation("/stats")}>
                                 <NavLink className="navlink" to="/stats" style={linkStyle} >
                                     <img
                                         src={graph}
@@ -81,7 +87,7 @@ function NavRectangle() {
                             </td>
                         </tr>
                         <tr>
-                            <td className="tableDown">
+                            <td className="tableDown" onClick={() => handleNavigation("/profile")}>
                                 <NavLink className="navlink" to="/profile" style={linkStyle}>
                                     <img
                                         src={profile}
@@ -92,7 +98,7 @@ function NavRectangle() {
                                 </NavLink>
                                 Profile
                             </td>
-                            <td className="tableDown">
+                            <td className="tableDown" onClick={() => handleNavigation("/")}>
                                 <NavLink className="navlink" to="/" style={linkStyle} onClick={handleLogoutClick}>
                                     <img
                                         src={peace}

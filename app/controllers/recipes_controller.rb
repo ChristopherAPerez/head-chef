@@ -1,31 +1,18 @@
 class RecipesController < ApplicationController
-
+    wrap_parameters format: []
+    
     def index
         recipes = Recipe.all
         render json: recipes, include: ['reviews', 'user']
     end
 
-    def users_recipe_index
-        user = User.find_by(id: session[:user_id])
-        recipes = Recipe.where(user_id: user.id)
-        render json: recipes, include: ['reviews', 'user']
-    end
-
-    def my_recipes_menus
-        user = User.find_by(id: session[:user_id])
-        recipe = user.recipes.find_by(id: params[:id])
-        menus = recipe.menus.where(publish: true)
-        render json: menus, include: ['user', 'menu_to_recipes']
-    end
-
     def create
         recipe = Recipe.create(recipe_params)
-        render json: recipe, include: ['reviews', 'user']
-    end
-
-    def show
-        recipe = Recipe.find_by(id: params[:id])
-        render json: recipe, include: ['reviews', 'user']
+        if recipe.valid?
+            render json: recipe, include: ['reviews', 'user']
+        else
+            render json: { errors: [ recipe.errors.full_messages ] }, status: :unprocessable_entity
+        end
     end
 
     def update
@@ -42,6 +29,13 @@ class RecipesController < ApplicationController
         recipe = Recipe.find_by(id: params[:id])
         recipe.destroy
         head :no_content
+    end
+
+    def my_recipes_menus
+        user = User.find_by(id: session[:user_id])
+        recipe = user.recipes.find_by(id: params[:id])
+        menus = recipe.menus.where(publish: true)
+        render json: menus, include: ['user', 'menu_to_recipes']
     end
 
     def recipes_search

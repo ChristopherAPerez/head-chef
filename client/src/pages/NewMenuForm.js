@@ -43,20 +43,20 @@ function NewMenuForm() {
 
     }
 
-    function sendSms() {
-        fetch('/send_sms', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                number: phoneNumber
-            }),
-        })
-            .then(res => res.json())
-            .then(data => console.log(data))
-            .catch(err => console.log(err));
-    }
+    // function sendSms() {
+    //     fetch('/send_sms', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify({
+    //             number: phoneNumber
+    //         }),
+    //     })
+    //         .then(res => res.json())
+    //         .then(data => console.log(data))
+    //         .catch(err => console.log(err));
+    // }
 
     function publishMenu() {
         fetch(`menus/${unpublish.id}`, {
@@ -84,7 +84,8 @@ function NewMenuForm() {
     }
 
     function unpublished() {
-        sendSms()
+        // sendSms()
+        setPhoneNumber('')
         setTimeout(() => {
             publishMenu()
         }, 3000);
@@ -138,7 +139,7 @@ function NewMenuForm() {
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
             />
-            <button className="button" onClick={unpublished}>Publish</button>
+            <button className="button" onClick={unpublished}>Send Menu</button>
                 </>
             ) : (
                 <>

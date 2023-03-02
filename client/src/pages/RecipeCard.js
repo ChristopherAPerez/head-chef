@@ -41,7 +41,6 @@ function RecipeCard({ recipe, updatedRecipes }) {
     const [addNewStep, setAddNewStep] = useState("");
 
     function handleMenu() {
-
         fetch("menu_to_recipes", {
             method: "POST",
             headers: {
@@ -78,10 +77,7 @@ function RecipeCard({ recipe, updatedRecipes }) {
     }
 
     function handleSubmit(e) {
-
         e.preventDefault();
-
-
         fetch(`recipes/${recipe.id}`, {
             method: "PATCH",
             headers: {
@@ -196,6 +192,7 @@ function RecipeCard({ recipe, updatedRecipes }) {
                 if (r.ok) {
                     r.json().then((update) => {
                         setSteps(updateStep)
+                        setAddNewStep("")
                     });
                 } else {
                     r.json().then((err) => {
@@ -398,10 +395,16 @@ function RecipeCard({ recipe, updatedRecipes }) {
                                                 onChange={(e) => setAddNewStep(e.target.value)}
                                             />
                                             <br></br>
-                                            <input
-                                                type="submit"
-                                                value="Add New Step"
-                                            />
+                                            {
+                                                addNewStep === '' ?
+                                                    <></>
+                                                    :
+                                                    <input
+                                                        className="editButton"
+                                                        type="submit"
+                                                        value="Add New Step"
+                                                    />
+                                            }
                                         </form>
                                     </>
                                 ) : (

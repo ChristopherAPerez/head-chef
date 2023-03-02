@@ -3,7 +3,6 @@ import React from "react";
 function EditIngredients({ recipe, setIngredients, ingredients, ingredient, index }) {
 
     function handleRemove() {
-
         const updateIngredients = [...ingredients]
         updateIngredients.splice(index, 1)
 
@@ -16,11 +15,10 @@ function EditIngredients({ recipe, setIngredients, ingredients, ingredient, inde
                 ingredients: updateIngredients
             }),
         })
-
             .then((r) => {
                 if (r.ok) {
                     r.json().then((update) => {
-                        setIngredients()
+                        setIngredients(updateIngredients)
                     });
                 } else {
                     r.json().then((err) => {
@@ -31,9 +29,7 @@ function EditIngredients({ recipe, setIngredients, ingredients, ingredient, inde
 
     }
 
-
     return (
-
         <>
             <tr>
                 <td>
@@ -41,7 +37,6 @@ function EditIngredients({ recipe, setIngredients, ingredients, ingredient, inde
                 </td>
             </tr>
         </>
-
     )
 }
 

@@ -223,17 +223,34 @@
 }
 
 .friendContainer {
+  text-align: left;
   width: 450px;
   min-height: 350px;
   height: auto;
   margin-left: auto;
   margin-right: auto;
   background-color: pink;
+  border: 3px solid black;
+  padding: 3px;
+}
+
+.myRecipeContainer{
+  width: 450px;
+  min-height: 350px;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: pink;
+  border: 3px solid black;
+  padding: 3px;
 }
 
 .friendMenuTable {
   width: 300px;
   float: right;
+  text-align: left;
+  background-color: lightblue;
+  border: 1px solid black;
 }
 
 .friendTable {
@@ -244,6 +261,20 @@
 
 .friendTabletd {
   width: 100px;
+  background-color: #add8e6;
+  border: 1px solid black;
+  text-align: left;
+}
+
+.myRecipeTabletd {
+  font-size: 15px;
+  background-color: #add8e6;
+  border: 1px solid black;
+  text-align: left;
+}
+
+.myRecipeMenusTabletd{
+  width: 400px;
   background-color: #add8e6;
   border: 1px solid black;
   text-align: left;
@@ -260,6 +291,16 @@
 
 .latestMenuTable{
   background-color: #add8e6;
+}
+
+.listofMenus{
+  max-height: 295px;
+  overflow: scroll;
+  border: 1px solid black;
+}
+
+.listofMenus::-webkit-scrollbar {
+  display: none;
 }
 
 .logo {
@@ -318,7 +359,19 @@
   background-color: #fbbbc3;
 }
 
+.slotLink {
+  float: left;
+  border: 1px solid black;
+  background-color: #fbbbc3;
+}
+
 .slot:hover {
+  cursor: default;
+  background-color: #fbbbc3;
+}
+
+.slotLink:hover {
+  cursor: pointer;
   background-color: #fbbbc3;
   color: yellow;
 }
@@ -367,6 +420,8 @@
   width: 90%;
   border: 5px solid black;
   border-radius: 5px;
+
+  padding: 5px;
 }
 
 .recipeText{
@@ -400,17 +455,39 @@ table td {
   border-collapse: collapse;
 }
 
-.stepTable{
-
-}
-
-
 .tableDown {
   border: 3px solid black;
   background-color: #fbbbc3;
 }
 
+.loggedOut{
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 3px dotted black;
+  background-color: #fbbbc3;
+}
+
+.loginForm{
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 3px dotted black;
+  background-color: #fbbbc3;
+  padding-bottom: 10px;
+}
+
+.signupForm{
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 3px dotted black;
+  background-color: #fbbbc3;
+  padding-bottom: 10px;
+}
+
 .tableDown:hover {
+  cursor: pointer;
   background-color: #fbbbc3;
   color: yellow;
 }
@@ -465,6 +542,7 @@ Modal.content {
 }
 
 .ReactModal__Content--after-open {
+  font-family: "Papyrus";
   position: absolute;
   inset: 40px;
   border: 10px solid black;

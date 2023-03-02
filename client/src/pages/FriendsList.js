@@ -10,7 +10,6 @@ function FriendsList() {
 
     const { friends } = useContext(UserContext)
 
-    const [page, setPage] = useState("")
     const [menu, setMenu] = useState(null)
     const [recipes, setRecipes] = useState([])
 
@@ -35,30 +34,39 @@ function FriendsList() {
                             return <FriendCard
                                 key={friend.id}
                                 friend={friend}
-                                setPage={setPage}
                                 setMenu={setMenu}
                                 setRecipes={setRecipes}
                             />
                         })}
                     </tbody>
                 </table>
-                <table className='friendMenuTable'>
+                <table>
                     <tbody>
                         <tr >
                             <td>
                                 <b>Latest Menu Post</b>
                             </td>
                         </tr>
-                        {
-                            page === "menu" ?
-                                <>
-                                    <MenuCard menu={menu} recipes={recipes} />
-                                </>
-                                :
-                                <></>
-                        }
                     </tbody>
                 </table>
+                {
+                    menu ?
+                        <table className='friendMenuTable'>
+                            <tbody>
+                                {
+                                    menu ?
+                                        <>
+                                            <MenuCard recipes={recipes} />
+                                        </>
+                                        :
+                                        <></>
+                                }
+                            </tbody>
+                        </table>
+                        :
+                        <></>
+                }
+
             </div>
         </>
     )

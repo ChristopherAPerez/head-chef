@@ -109,17 +109,25 @@ function EditRecipe({ setIngredients, ingredients, recipe, pic, setPic, descript
                                             <br></br>
                                             <label>Add New Step:</label>
                                             <br></br>
-                                            <button
-                                                className="editButton"
-                                                type="button"
-                                                onClick={handleAddNewIngredient}
-                                            >Add New Ingredient</button>
                                             <input
                                                 name=""
                                                 autoComplete="off"
                                                 value={addNewIngredient}
                                                 onChange={(e) => setAddNewIngredient(e.target.value)}
                                             />
+                                            {
+                                                addNewIngredient === '' ? <button
+                                                    className="editButton"
+                                                    type="button"
+                                                >Add New Ingredient</button>
+                                                    :
+                                                    <button
+                                                        className="editButton"
+                                                        type="button"
+                                                        onClick={handleAddNewIngredient}
+                                                    >Add New Ingredient</button>
+                                            }
+
                                         </td>
                                     </tr>
                                 </tbody>

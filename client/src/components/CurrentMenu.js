@@ -1,10 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { PublishContext } from './App';
-import { NavLink } from "react-router-dom"
+import { useNavigate, NavLink } from "react-router-dom"
 import menu from '../images/MENU Book closed.PNG'
 import menuGif from '../images/MENU Book pink.GIF'
 
 function CurrentMenu() {
+
+    const navigate = useNavigate()
 
     const { unpublishRecipes } = useContext(PublishContext)
     const [hovered, setHovered] = useState(false);
@@ -17,11 +19,15 @@ function CurrentMenu() {
         fontSize: "14px",
     };
 
+    function handleNavigation(value){
+        navigate(value)
+    }
+
     return (
         <table className='currentMenu'>
             <tbody >
                 <tr>
-                    <td className='slot'>
+                    <td className='slotLink' onClick={() => handleNavigation("/menus")}>
                         <NavLink className="navlink" to="/menus" style={linkStyle}>
                             <img
                                 src={hovered ? menuGif : menu}

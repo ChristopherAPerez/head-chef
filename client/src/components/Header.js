@@ -26,6 +26,9 @@ function Header() {
                     <br></br>
                     <Link className="button" to="/signup" >Signup</Link>
                     <Link className="button" to="/login" >Login</Link>
+                    <br></br>
+                    <br></br>
+                    <br></br>
                 </> 
             )}
         </>

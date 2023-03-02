@@ -39,21 +39,20 @@ function App() {
 
 
   useEffect(() => {
-
-    fetch("/me").then((r) => {
-      if (r.ok) {
-        r.json().then((user) => {
-          setUser(user)
-          setFriends(user.friends)
-          setMyRecipes(user.recipes)
-          setLoading(false)
-        })
-      }
-    });
+      fetch("/me").then((r) => {
+        if (r.ok) {
+          r.json().then((user) => {
+            setUser(user)
+            setFriends(user.friends)
+            setMyRecipes(user.recipes)
+            setLoading(false)
+          })
+        }
+      });
   }, []);
 
   useEffect(() => {
-    fetch("/index_published").then((r) => {
+    fetch("/menu_history").then((r) => {
       if (r.ok) {
         r.json().then((menu) => {
           setMenus(menu)
@@ -63,21 +62,12 @@ function App() {
   }, []);
 
   useEffect(() => {
-    fetch("/published").then((r) => {
+    fetch("/unpublish_menu").then((r) => {
       if (r.ok) {
         r.json().then((menu) => {
           setUnPublish(menu)
           setUnpublishMenuToRecipes(menu.menu_to_recipes)
-        })
-      }
-    });
-  }, []);
-
-  useEffect(() => {
-    fetch("/published_recipes").then((r) => {
-      if (r.ok) {
-        r.json().then((recipes) => {
-          setUnPublishRecipes(recipes)
+          setUnPublishRecipes(menu.recipes)
         })
       }
     });
@@ -85,19 +75,19 @@ function App() {
 
   function updatedMyRecipes(update) {
     const updatedMyRecipes = myRecipes.map((recipe) => {
-        if (recipe.id === update.id) {
-            return update;
-        } else {
-            return recipe;
-        }
+      if (recipe.id === update.id) {
+        return update;
+      } else {
+        return recipe;
+      }
     });
     setMyRecipes(updatedMyRecipes);
-}
+  }
 
   function deleteMyRecipe(id) {
     const updatedMyRecipes = myRecipes.filter((recipe) => recipe.id !== id);
     setMyRecipes(updatedMyRecipes);
-}
+  }
 
   return (
     <div className='App'>
@@ -116,9 +106,7 @@ function App() {
           ) : (
             <>
               <UserContext.Provider value={{ user, setUser, friends, setFriends }}>
-                <PublishContext.Provider value={{ unpublishRecipes }}>
                   <Header />
-                </PublishContext.Provider>
               </UserContext.Provider>
               <br></br>
               <UserContext.Provider value={{ user, setUser, setLoading, stats, setStats, friends, setFriends, myRecipes, setMyRecipes, deleteMyRecipe, updatedMyRecipes }}>
